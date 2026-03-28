@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Game Edukasi Makanan</title>
+    <style>
+        body {
+            margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif;
+            background-color: #e3f2fd; display: flex; flex-direction: column;
+            align-items: center; height: 100vh; overflow: hidden; touch-action: none;
+        }
+
+        h2 { margin: 15px 0 5px; color: #1565c0; font-size: 1.4rem; text-align: center; }
+        #msg { margin-bottom: 10px; font-weight: bold; color: #0d47a1; font-size: 0.9rem; height: 1.2rem; }
+
+        .game-container {
+            display: flex; width: 95vw; max-width: 420px; height: 70vh;
+            background: rgba(255, 255, 255, 0.9); border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 15px; box-sizing: border-box; gap: 15px;
+            border: 4px solid #bbdefb;
+        }
+
+        .column {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: space-around; align-items: center;
+        }
+
+        .slot-wrapper {
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+            width: 100%;
+        }
+
+        .slot {
+            width: 60px; height: 60px; background-color: #cfd8dc; border-radius: 15px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 32px; filter: brightness(0); opacity: 0.2;
+            border: 2px dashed #90a4ae; transition: all 0.3s ease;
+        }
+
+        .food-name {
+            font-size: 10px; font-weight: 800; color: #546e7a; 
+            text-transform: uppercase; text-align: center;
+            max-width: 80px; line-height: 1;
+        }
+
+        .slot.matched {
+            filter: none; opacity: 1; border: 2px solid #4CAF50; 
+            background-color: #e8f5e9; transform: scale(1.05);
+        }
+
+        .food-item {
+            width: 65px; height: 65px; background-color: #fff;
+            border: 3px solid #64b5f6; border-radius: 15px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 35px; cursor: grab; touch-action: none; z-index: 100;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
+        }
+
+        .food-item:active { transform: scale(1.1); }
+        .hidden { visibility: hidden; pointer-events: none; }
+
+        .btn-reset {
+            margin-top: 20px; padding: 12px 30px; border: none;
+            background: #1e88e5; color: white; border-radius: 50px;
+            font-weight: bold; cursor: pointer; font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(30,136,229,0.4);
+        }
+        .btn-reset:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+    <h2>Tebak Makanannya!</h2>
+    <div id="msg">Tarik makanan ke bayangannya</div>
+
+    <div class="game-container">
+        <div class="column" id="left-col"></div>
+        <div class="column" id="right-col"></div>
+    </div>
+
+    <button class="btn-reset" onclick="initGame()">Main Lagi 🔄</button>
+
+    <script>
+        const foodPool = [
+            // Buah-buahan
+            { id: '1', icon: '🍎', name: 'Apel' }, { id: '2', icon: '🍌', name: 'Pisang' },
+            { id: '3', icon: '🍇', name: 'Anggur' }, { id: '4', icon: '🍉', name: 'Semangka' },
+            { id: '5', icon: '🍓', name: 'Stroberi' }, { id: '6', icon: '🍍', name: 'Nanas' },
+            { id: '7', icon: '🥭', name: 'Mangga' }, { id: '8', icon: '🍋', name: 'Lemon' },
+            { id: '9', icon: '🍊', name: 'Jeruk' }, { id: '10', icon: '🍒', name: 'Ceri' },
+            { id: '11', icon: '🥝', name: 'Kiwi' }, { id: '12', icon: '🥑', name: 'Alpukat' },
+            // Sayuran
+            { id: '13', icon: '🥦', name: 'Brokoli' }, { id: '14', icon: '🥕', name: 'Wortel' },
+            { id: '15', icon: '🌽', name: 'Jagung' }, { id: '16', icon: '🍅', name: 'Tomat' },
+            { id: '17', icon: '🍆', name: 'Terong' }, { id: '18', icon: '🥔', name: 'Kentang' },
+            { id: '19', icon: '🥒', name: 'Timun' }, { id: '20', icon: '🥬', name: 'Selada' },
+            { id: '21', icon: '🍄', name: 'Jamur' }, { id: '22', icon: '🧅', name: 'Bawang' },
+            // Makanan Berat
+            { id: '23', icon: '🍔', name: 'Burger' }, { id: '24', icon: '🍕', name: 'Pizza' },
+            { id: '25', icon: '🍗', name: 'Ayam' }, { id: '26', icon: '🍖', name: 'Daging' },
+            { id: '27', icon: '🍝', name: 'Spageti' }, { id: '28', icon: '🍜', name: 'Mie' },
+            { id: '29', icon: '🍛', name: 'Kari' }, { id: '30', icon: '🍣', name: 'Sushi' },
+            { id: '31', icon: '🌮', name: 'Tako' }, { id: '32', icon: '🍱', name: 'Bento' },
+            { id: '33', icon: '🥪', name: 'Sandwich' }, { id: '34', icon: '🍳', name: 'Telur' },
+            // Minuman & Dessert
+            { id: '35', icon: '🥤', name: 'Soda' }, { id: '36', icon: '🧋', name: 'Boba' },
+            { id: '37', icon: '☕', name: 'Kopi' }, { id: '38', icon: '🍵', name: 'Teh' },
+            { id: '39', icon: '🥛', name: 'Susu' }, { id: '40', icon: '🍺', name: 'Bir' },
+            { id: '41', icon: '🍦', name: 'Es Krim' }, { id: '42', icon: '🍩', name: 'Donat' },
+            { id: '43', icon: '🍰', name: 'Kue' }, { id: '44', icon: '🍫', name: 'Cokelat' },
+            { id: '45', icon: '🍪', name: 'Kue Kering' }, { id: '46', icon: '🥨', name: 'Pretzel' },
+            { id: '47', icon: '🥞', name: 'Pancake' }, { id: '48', icon: '🍿', name: 'Popcorn' },
+            { id: '49', icon: '🍮', name: 'Puding' }, { id: '50', icon: '🍭', name: 'Permen' }
+        ];
+
+        let score = 0;
+
+        function initGame() {
+            score = 0;
+            document.getElementById('msg').innerText = "Tarik makanan ke bayangannya";
+            const leftCol = document.getElementById('left-col');
+            const rightCol = document.getElementById('right-col');
+            leftCol.innerHTML = '';
+            rightCol.innerHTML = '';
+
+            // Pilih 5 item acak dari 50 yang ada
+            const selected = [...foodPool].sort(() => 0.5 - Math.random()).slice(0, 5);
+            
+            // Render Siluet (Kiri) - Diacak lagi posisinya
+            const shuffledSilhouettes = [...selected].sort(() => 0.5 - Math.random());
+            shuffledSilhouettes.forEach(food => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'slot-wrapper';
+                
+                const slot = document.createElement('div');
+                slot.className = 'slot';
+                slot.dataset.id = food.id;
+                slot.innerText = food.icon;
+
+                const nameLabel = document.createElement('span');
+                nameLabel.className = 'food-name';
+                nameLabel.innerText = food.name;
+
+                wrapper.appendChild(slot);
+                wrapper.appendChild(nameLabel);
+                leftCol.appendChild(wrapper);
+            });
+
+            // Render Makanan Berwarna (Kanan)
+            selected.forEach(food => {
+                const div = document.createElement('div');
+                div.className = 'food-item';
+                div.draggable = true;
+                div.dataset.id = food.id;
+                div.innerText = food.icon;
+                
+                addDragListeners(div);
+                rightCol.appendChild(div);
+            });
+        }
+
+        function addDragListeners(el) {
+            let startX, startY, initialX, initialY;
+
+            el.ondragstart = (e) => e.dataTransfer.setData('text', el.dataset.id);
+
+            el.addEventListener('touchstart', (e) => {
+                const touch = e.touches[0];
+                startX = touch.clientX; startY = touch.clientY;
+                const rect = el.getBoundingClientRect();
+                initialX = rect.left; initialY = rect.top;
+                el.style.position = 'fixed';
+                el.style.left = initialX + 'px';
+                el.style.top = initialY + 'px';
+            });
+
+            el.addEventListener('touchmove', (e) => {
+                const touch = e.touches[0];
+                el.style.left = (initialX + touch.clientX - startX) + 'px';
+                el.style.top = (initialY + touch.clientY - startY) + 'px';
+            });
+
+            el.addEventListener('touchend', (e) => {
+                const touch = e.changedTouches[0];
+                el.style.display = 'none';
+                const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+                el.style.display = 'flex';
+                el.style.position = 'static';
+
+                if (dropTarget && dropTarget.classList.contains('slot')) {
+                    checkMatch(el.dataset.id, dropTarget, el);
+                }
+            });
+        }
+
+        document.ondragover = (e) => e.preventDefault();
+        document.ondrop = (e) => {
+            const foodId = e.dataTransfer.getData('text');
+            const target = e.target;
+            const originalItem = document.querySelector(`.food-item[data-id="${foodId}"]`);
+            if (target && target.classList.contains('slot')) {
+                checkMatch(foodId, target, originalItem);
+            }
+        };
+
+        function checkMatch(foodId, slot, foodElement) {
+            if (slot.dataset.id === foodId && !slot.classList.contains('matched')) {
+                slot.classList.add('matched');
+                foodElement.classList.add('hidden');
+                score++;
+                if (score === 5) {
+                    document.getElementById('msg').innerText = "Luar Biasa! Kamu Menang! 🏆";
+                }
+            }
+        }
+
+        initGame();
+    </script>
+</body>
+</html>

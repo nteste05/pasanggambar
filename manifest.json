@@ -1,0 +1,11 @@
+{
+    "name": "PasangGambar: Game memasangkan gambar",
+    "short_name": "PasangGambar",
+    "description": "Mainkan PasangGambar, game online gratis! Nikmati serunya, Klik & main langsung di browser sekarang",
+    "icons": "pasanggambar-favicon.jpg",
+    "theme_color": "#2D2D2D",
+    "background_color": "#2D2D2D",
+    "display": "standalone",
+    "start_url": "./index.html",
+    "orientation": "portrait"
+}

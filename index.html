@@ -248,7 +248,11 @@
     <nav class="navbar">
         <button class="menu-btn" onclick="openNav()">&#9776;</button>
         <header><h1>🧩 PasangGambar</h1></header>
-        <p class="visually-hidden"></p>
+        <p class="visually-hidden">PasangGambar: Game Edukasi Mencocokkan Siluet yang Seru dan Menantang!<br><br>Apakah Anda sedang mencari permainan yang tidak hanya menghibur tetapi juga mengasah ketajaman visual dan logika? Selamat datang di<strong>PasangGambar</strong>, game teka-teki kasual terbaru yang dirancang untuk semua usia! Dengan konsep permainan yang sederhana namun adiktif, PasangGambar akan mengajak Anda masuk ke dunia penuh warna di mana ketelitian adalah kunci utamanya.</p>
+        <p class="visually-hidden">PasangGambar adalah game simulasi mencocokkan objek di mana tugas utama pemain adalah memasangkan gambar ke tempat siluet yang benar. Mulai dari hewan lucu, makanan dan kendaraan yang harus diletakkan tepat di atas bayangan atau siluet yang sesuai.</p>
+        <p class="visually-hidden">Di PasangGambar, Anda cukup melakukan drag and drop(seret dan lepas). Pilih salah satu gambar yang muncul di sisi layar. Perhatikan bentuk siluet yang tersedia di tengah papan permainan.Geser gambar tersebut ke siluet yang memiliki bentuk identik. Jika pas, gambar akan terkunci!</p>
+        <p class="visually-hidden">Selain sebagai pengisi waktu luang, <strong>Permainan PasangGambar</strong> memiliki manfaat edukatif yang nyata.  Melatih Fokus dan Konsentrasi: Membantu pemain untuk lebih detail dalam melihat perbedaan bentuk. Meningkatkan Kemampuan Kognitif: Mengasah otak dalam mengenali pola dan objek secara cepat. Koordinasi Mata dan Tangan: Sangat baik untuk melatih motorik halus, terutama bagi anak-anak yang sedang dalam masa pertumbuhan.</p>
+        <p class="visually-hidden">PasangGambar adalah pilihan sempurna bagi orang tua yang ingin memberikan tontonan sekaligus tuntunan digital yang positif bagi anak-anak. Namun, orang dewasa juga akan menemukan kepuasan tersendiri dalam menyelesaikan setiap tantangan siluet. <strong>Mainkan Game PasangGambar</strong> sekarang secara GRATIS dan mulailah petualangan mencocokkan siluet yang paling seru tahun ini!</p>
     </nav>
 <div class="container">
     <p id="msg">Pilih kategori untuk mulai!</p>
@@ -272,56 +276,80 @@
 </div>
 <script>
     const database = {
-        makanan: [
-            { id: 'f1', icon: '🍎', name: 'Apel' }, { id: 'f2', icon: '🍔', name: 'Burger' },
-            { id: 'f3', icon: '🍕', name: 'Pizza' }, { id: 'f4', icon: '🥦', name: 'Brokoli' },
-            { id: 'f5', icon: '🍣', name: 'Sushi' }
-        ],
-        transportasi: [
-            { id: 't1', icon: '🚗', name: 'Mobil' }, { id: 't2', icon: '🚀', name: 'Roket' },
-            { id: 't3', icon: '✈️', name: 'Pesawat' }, { id: 't4', icon: '🚲', name: 'Sepeda' },
-            { id: 't5', icon: '🚢', name: 'Kapal' }
-        ],
-        hewan: [
-            { id: 'a1', icon: '🦁', name: 'Singa' }, { id: 'a2', icon: '🐘', name: 'Gajah' },
-            { id: 'a3', icon: '🦒', name: 'Jerapah' }, { id: 'a4', icon: '🐧', name: 'Penguin' },
-            { id: 'a5', icon: '🐸', name: 'Katak' }
+    makanan: [
+        { id: 'f1', icon: '🍎', name: 'Apel' }, { id: 'f2', icon: '🍔', name: 'Burger' },
+        { id: 'f3', icon: '🍕', name: 'Pizza' }, { id: 'f4', icon: '🥦', name: 'Brokoli' },
+        { id: 'f5', icon: '🍣', name: 'Sushi' }, { id: 'f6', icon: '🍜', name: 'Ramen' },
+        { id: 'f7', icon: '🍦', name: 'Es Krim' }, { id: 'f8', icon: '🌮', name: 'Tako' },
+        { id: 'f9', icon: '🍞', name: 'Roti' }, { id: 'f10', icon: '🍳', name: 'Telur' },
+        { id: 'f11', icon: '🍰', name: 'Kue' }, { id: 'f12', icon: '🍟', name: 'Kentang Goreng' },
+        { id: 'f13', icon: '🥨', name: 'Pretzel' }, { id: 'f14', icon: '🍩', name: 'Donat' },
+        { id: 'f15', icon: '🥗', name: 'Salad' }, { id: 'f16', icon: '🍗', name: 'Ayam Goreng' },
+        { id: 'f17', icon: '🍝', name: 'Spageti' }, { id: 'f18', icon: '🥐', name: 'Kroisan' },
+        { id: 'f19', icon: '🥪', name: 'Sandwich' }, { id: 'f20', icon: '🍫', name: 'Cokelat' }
+    ],
+    transportasi: [
+        { id: 't1', icon: '🚗', name: 'Mobil' }, { id: 't2', icon: '🚀', name: 'Roket' },
+        { id: 't3', icon: '✈️', name: 'Pesawat' }, { id: 't4', icon: '🚲', name: 'Sepeda' },
+        { id: 't5', icon: '🚢', name: 'Kapal' }, { id: 't6', icon: '🚁', name: 'Helikopter' },
+        { id: 't7', icon: '🚂', name: 'Kereta Api' }, { id: 't8', icon: '🛵', name: 'Motor' },
+        { id: 't9', icon: '🚜', name: 'Traktor' }, { id: 't10', icon: '🚌', name: 'Bus' },
+        { id: 't11', icon: '🚑', name: 'Ambulans' }, { id: 't12', icon: '🚕', name: 'Taksi' },
+        { id: 't13', icon: '🏎️', name: 'Mobil Balap' }, { id: 't14', icon: '🛶', name: 'Kano' },
+        { id: 't15', icon: '🛹', name: 'Skateboard' }, { id: 't16', icon: '🚠', name: 'Kereta Gantung' },
+        { id: 't17', icon: '🚤', name: 'Speedboat' }, { id: 't18', icon: '🚛', name: 'Truk' },
+        { id: 't19', icon: '🛸', name: 'UFO' }, { id: 't20', icon: '🎈', name: 'Balon Udara' }
+    ],
+    hewan: [
+        { id: 'a1', icon: '🦁', name: 'Singa' }, { id: 'a2', icon: '🐘', name: 'Gajah' },
+        { id: 'a3', icon: '🦒', name: 'Jerapah' }, { id: 'a4', icon: '🐧', name: 'Penguin' },
+        { id: 'a5', icon: '🐸', name: 'Katak' }, { id: 'a6', icon: '🐢', name: 'Kura-kura' },
+        { id: 'a7', icon: '🦈', name: 'Hiu' }, { id: 'a8', icon: '🦉', name: 'Burung Hantu' },
+        { id: 'a9', icon: '🦋', name: 'Kupu-kupu' }, { id: 'a10', icon: '🐙', name: 'Gurita' },
+        { id: 'a11', icon: '🦖', name: 'T-Rex' }, { id: 'a12', icon: '🦓', name: 'Zebra' },
+        { id: 'a13', icon: '🦌', name: 'Rusa' }, { id: 'a14', icon: '🦀', name: 'Kepiting' },
+        { id: 'a15', icon: '🐼', name: 'Panda' }, { id: 'a16', icon: '🦆', name: 'Bebek' },
+        { id: 'a17', icon: '🐝', name: 'Lebah' }, { id: 'a18', icon: '🐒', name: 'Monyet' },
+        { id: 'a19', icon: '🐬', name: 'Lumba-lumba' }, { id: 'a20', icon: '🦘', name: 'Kangguru' }
         ]
     };
 
     let score = 0;
 
-    function startGame(category) {
-        score = 0;
-        document.getElementById('menu').style.display = 'none';
-        document.getElementById('game-area').style.display = 'grid';
-        document.getElementById('msg').innerText = "Tarik gambar ke bayangannya!";
-        
-        const leftCol = document.getElementById('left-col');
-        const rightCol = document.getElementById('right-col');
-        leftCol.innerHTML = '';
-        rightCol.innerHTML = '';
+function startGame(category) {
+    score = 0;
+    document.getElementById('game-area').style.display = 'grid';
+    document.getElementById('msg').innerText = "Tarik gambar ke bayangannya!";
+    
+    const leftCol = document.getElementById('left-col');
+    const rightCol = document.getElementById('right-col');
+    leftCol.innerHTML = '';
+    rightCol.innerHTML = '';
 
-        const items = [...database[category]];
-        
-        // Render Target (Acak)
-        [...items].sort(() => Math.random() - 0.5).forEach(item => {
-            const wrap = document.createElement('div');
-            wrap.className = 'slot-wrapper';
-            wrap.innerHTML = `<div class="slot" data-id="${item.id}">${item.icon}</div><span class="item-name">${item.name}</span>`;
-            leftCol.appendChild(wrap);
-        });
+    // 1. Acak data terlebih dahulu, lalu ambil hanya 5 data pertama
+    const items = [...database[category]]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 5);
+    
+    // 2. Render Target (Sisi Kiri) - Diacak lagi posisinya agar menantang
+    [...items].sort(() => Math.random() - 0.5).forEach(item => {
+        const wrap = document.createElement('div');
+        wrap.className = 'slot-wrapper';
+        wrap.innerHTML = `<div class="slot" data-id="${item.id}">${item.icon}</div><span class="item-name">${item.name}</span>`;
+        leftCol.appendChild(wrap);
+    });
 
-        // Render Draggable
-        items.forEach(item => {
-            const el = document.createElement('div');
-            el.className = 'draggable-item';
-            el.innerText = item.icon;
-            el.dataset.id = item.id;
-            initDragLogic(el);
-            rightCol.appendChild(el);
-        });
-    }
+    // 3. Render Draggable (Sisi Kanan)
+    items.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'draggable-item';
+        el.innerText = item.icon;
+        el.dataset.id = item.id;
+        initDragLogic(el);
+        rightCol.appendChild(el);
+    });
+}
+
 
     function initDragLogic(el) {
         let offX, offY;
@@ -370,10 +398,6 @@
             
             if (score === 5) {
                 document.getElementById('msg').innerHTML = "🎉 <b>Luar Biasa! Kamu Menang!</b>";
-                // Tunggu 2 detik lalu reload game (kembali ke menu)
-                setTimeout(() => {
-                    location.reload();
-                }, 2000);
             }
         }
     }
